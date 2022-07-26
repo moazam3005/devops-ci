@@ -51,11 +51,13 @@ jobs:
       with:
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-    - name: delete old build
-      run: rm -rf .terraform
 
     - name: Terraform Init
       run: terraform init
+
+    - name: delete old build
+      run: terraform destroy
+
 
         #    - name: Terraform Plan
         #run: terraform plan -input=false
