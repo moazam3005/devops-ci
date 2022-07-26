@@ -43,9 +43,9 @@ jobs:
         shell: bash
     
     steps:
-      - uses: AutoModality/action-clean@v1
-      - uses: actions/checkout@v2
-      - run: echo Hello World
+    - uses: AutoModality/action-clean@v1
+    - uses: actions/checkout@v2
+    - run: echo Hello World
 
     
     - name: Checkout
