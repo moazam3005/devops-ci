@@ -60,12 +60,6 @@ jobs:
     - name: Terraform Init
       run: terraform init
 
-    - name: delete old build
-      run: terraform destroy
-
-
-        #    - name: Terraform Plan
-        #run: terraform plan -input=false
 
     - name: Terraform Apply
       run: terraform apply -auto-approve -input=false

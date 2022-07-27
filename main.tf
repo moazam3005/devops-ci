@@ -1,7 +1,7 @@
 provider "aws" {
   region  = "us-east-1"
-  access_key = "AKIA24SYZGC63UC5LOUK"
-  secret_key = "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"
+  access_key = "AKIATSR74TEBYD5OX6HS"
+  secret_key = "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"
 
 }
 
@@ -9,8 +9,8 @@ resource "aws_security_group" "SecurityGroup" {
   name = "Security Group"
 
   ingress {
-    from_port   = 8080
-    to_port     = 8080
+    from_port   = 3000
+    to_port     = 3000
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -42,11 +42,24 @@ resource "aws_instance" "EC2Instance" {
   ami                    = data.aws_ami.ubuntu.id
   vpc_security_group_ids = [aws_security_group.SecurityGroup.id]
   key_name               = "node"
+  
+  user_data = <<-EOL
+  #!/bin/bash -xe
+  
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+  . ~/.nvm/nvm.sh
+  nvm install node
+  https://github.com/moazam3005/devops-ci.git  
+  cd src
+  npm install
+  node index.js
+  
+  EOL
 
   tags = {
     Name = "terraform"
   }
-  user_data = file("install.sh")
+ # user_data = file("install.sh")
 
 }
 
