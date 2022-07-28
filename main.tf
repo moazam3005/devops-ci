@@ -61,7 +61,7 @@ resource "aws_instance" "EC2Instance" {
   EOL
 
   tags = {
-    Name = "terraform"
+    Name = "terraform_1"
     Environment = "dev"
   }
  # user_data = file("install.sh")
