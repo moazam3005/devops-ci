@@ -44,7 +44,7 @@ resource "aws_instance" "EC2Instance" {
   instance_type          = "t2.medium"
   ami                    = data.aws_ami.ubuntu.id
   vpc_security_group_ids = [aws_security_group.SecurityGroup.id]
-  key_name               = "node.pem"
+  key_name               = "node"
   
   user_data = <<-EOL
   #!/bin/bash -xe
