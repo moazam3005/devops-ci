@@ -35,7 +35,7 @@ resource "aws_security_group" "SecurityGroup" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  tags {
+  tags = {
     Environment = "dev"
   }
 }
@@ -74,7 +74,7 @@ data "aws_ami" "ubuntu" {
     name   = "name"
     values = ["ubuntu/images/hvm-ssd/ubuntu-*-18.04-amd64-server-*"]
   }
-  tags {
+  tags = {
     Environment = "dev"
   }
   filter {
