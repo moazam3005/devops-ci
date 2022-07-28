@@ -35,29 +35,34 @@ resource "aws_security_group" "SecurityGroup" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  tags {
+    Environment = "dev"
+  }
 }
 
 resource "aws_instance" "EC2Instance" {
   instance_type          = "t2.medium"
   ami                    = data.aws_ami.ubuntu.id
   vpc_security_group_ids = [aws_security_group.SecurityGroup.id]
-  key_name               = "node"
+  key_name               = "node.pem"
   
   user_data = <<-EOL
   #!/bin/bash -xe
   
-  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+  sudo curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
   . ~/.nvm/nvm.sh
-  nvm install node
-  https://github.com/moazam3005/devops-ci.git  
-  cd src
-  npm install
-  node index.js
+  sudo nvm install node
+  sudo apt install git -y
+  sudo git clone https://github.com/moazam3005/devops-ci.git  
+  sudo npm init -y
+  sudo npm install --save express
+  npm start
   
   EOL
 
   tags = {
     Name = "terraform"
+    Environment = "dev"
   }
  # user_data = file("install.sh")
 
@@ -68,6 +73,9 @@ data "aws_ami" "ubuntu" {
   filter {
     name   = "name"
     values = ["ubuntu/images/hvm-ssd/ubuntu-*-18.04-amd64-server-*"]
+  }
+  tags {
+    Environment = "dev"
   }
   filter {
     name   = "virtualization-type"
